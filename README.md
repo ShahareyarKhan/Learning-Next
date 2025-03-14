@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<!-- Intoduction Folder Structure -->
+1. /app: Main workspace with routes, components, and logic.
+2. /app/lib: Utility and data-fetching functions.
+3. /app/ui: Pre-styled UI components (cards, tables, forms).
+4. /public: Static assets (images, etc.).
+5. Config Files: Pre-configured files (e.g., next.config.ts), no need to modify.
 
-## Getting Started
+<!-- <Image> Component: Enhanced <img> with optimization. -->
+1. Prevents Layout Shift: Images load smoothly.
+2. Auto-Resizing: Avoids large images on small screens.
+3. Lazy Loading: Loads images only when needed.
+4. Modern Formats: Supports WebP & AVIF for better performance.
 
-First, run the development server:
+<!-- page.tsx is a special Next.js file that exports a React component, and it's required for the route to be accessible. In your application, you already have a page file: /app/page.tsx - this is the home page associated with the route /. -->
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<!-- <Link />: Enables client-side navigation in Next.js. -->
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<!-- Next.js provides a hook called usePathname() that you can use to check the path and implement this pattern. -->
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<!-- seeding in the context of databases:
+Populating the database with an initial set of data -->
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+<!-- 
+SQL is the industry standard for querying relational databases (e.g. ORMs generate SQL under the hood). 
 
-## Learn More
+SQL is versatile, allowing you to fetch and manipulate specific data.
 
-To learn more about Next.js, take a look at the following resources:
+The postgres.js library provides protection against SQL injections.
+-->
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<!-- 
+There are two ways you implement streaming in Next.js:
+    1. At the page level, with the loading.tsx file (which creates <Suspense> for you).
+    2. At the component level, with <Suspense> for more granular control.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+loading.tsx is a special Next.js file built on top of React Suspense. It allows you to create fallback UI to show as a replacement while page content loads.
+ 
+-->
