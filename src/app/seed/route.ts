@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import postgres from 'postgres'; 
 // Import postgres for database interaction
 
-import { invoices, customers, revenue, users } from '../lib/placeholder-data'; // Import sample data
+import { invoices, customers,  users } from '../lib/placeholder-data'; // Import sample data
 
 // Establish connection to PostgreSQL database using environment variable
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
@@ -94,32 +94,32 @@ async function seedCustomers() {
 }
 
 // Function to seed Revenue table
-async function seedRevenue() {
-  // Create Revenue table if it does not exist
-  await sql`
-    CREATE TABLE IF NOT EXISTS revenue (
-      month VARCHAR(4) NOT NULL UNIQUE,
-      revenue INT NOT NULL
-    );
-  `;
+// async function seedRevenue() {
+//   // Create Revenue table if it does not exist
+//   await sql`
+//     CREATE TABLE IF NOT EXISTS revenue (
+//       month VARCHAR(4) NOT NULL UNIQUE,
+//       revenue INT NOT NULL
+//     );
+//   `;
 
-  // Insert revenue data into the database
-  const insertedRevenue = await Promise.all(
-    revenue.map((rev) => sql`
-      INSERT INTO revenue (month, revenue)
-      VALUES (${rev.month}, ${rev.revenue})
-      ON CONFLICT (month) DO NOTHING;
-    `),
-  );
+//   // Insert revenue data into the database
+//   const insertedRevenue = await Promise.all(
+//     revenue.map((rev) => sql`
+//       INSERT INTO revenue (month, revenue)
+//       VALUES (${rev.month}, ${rev.revenue})
+//       ON CONFLICT (month) DO NOTHING;
+//     `),
+//   );
 
-  return insertedRevenue;
-}
+//   return insertedRevenue;
+// }
 
 // API handler function for seeding the database
 export async function GET() {
   try {
     // Execute all seeding functions inside a transaction to ensure consistency
-    const result = await sql.begin((sql) => [
+    const result = await sql.begin(() => [
       seedUsers(),
       seedCustomers(),
       seedInvoices(),
@@ -127,7 +127,7 @@ export async function GET() {
     ]);
 
     // Return success response if seeding completes successfully
-    return Response.json({ message: 'Database seeded successfully' });
+    return Response.json({ message: 'Database seeded successfully', result: result });
   } catch (error) {
     // Return error response if any issue occurs
     return Response.json({ error }, { status: 500 });
